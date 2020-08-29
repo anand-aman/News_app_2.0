@@ -6,6 +6,7 @@ import 'webview.dart';
 import 'package:marquee/marquee.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:pocketnews/services/add_bookmark.dart' as addBookmark;
+import 'package:pocketnews/services/bookmark_map.dart';
 
 class NewsCard extends StatefulWidget {
   final Post post;
@@ -20,14 +21,26 @@ class NewsCard extends StatefulWidget {
 class _NewsCardState extends State<NewsCard> {
   bool isLiked = false;
   bool isBookmarked;
+  String savedBookmarkDocId;
+
+  void checkBookmarked() {
+    if (widget.isHomePage) {
+      isBookmarked = bookmarkMap.containsKey(widget.post.url);
+      if (isBookmarked) {
+        savedBookmarkDocId = bookmarkMap[widget.post.url];
+      }
+    } else {
+      isBookmarked = widget.isBookmark;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    print(widget.post);
-    print(widget.isBookmark);
-    print(widget.isHomePage);
-    isBookmarked = widget.isBookmark;
+//    print(widget.post);
+//    print(widget.isBookmark);
+//    print(widget.isHomePage);
+    checkBookmarked();
   }
 
   @override
@@ -65,8 +78,14 @@ class _NewsCardState extends State<NewsCard> {
                           gradient: LinearGradient(
                               begin: FractionalOffset.bottomCenter,
                               end: FractionalOffset.center,
-                              colors: [Colors.black.withOpacity(0.55), Colors.black.withOpacity(0.15)],
-                              stops: [0.2, 2.0]),
+                              colors: [
+                                Colors.black.withOpacity(0.55),
+                                Colors.black.withOpacity(0.15)
+                              ],
+                              stops: [
+                                0.2,
+                                2.0
+                              ]),
                         ),
                         alignment: Alignment.bottomCenter,
                         child: Padding(
@@ -89,10 +108,13 @@ class _NewsCardState extends State<NewsCard> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    widget.post.name,
-                    style: TextStyle(fontWeight: FontWeight.bold), //, fontSize: deviceHeight * 0.011
-                  ),
+                  child: widget.post.name == null
+                      ? Container()
+                      : Text(
+                          widget.post.name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold), //, fontSize: deviceHeight * 0.011
+                        ),
                 ),
                 Spacer(),
                 widget.post.author != null
@@ -103,7 +125,8 @@ class _NewsCardState extends State<NewsCard> {
                           avatar: Icon(Icons.edit),
                           label: Container(
                             height: 16.0,
-                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.42),
+                            constraints:
+                                BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.42),
                             child: AutoSizeText(
                               widget.post.author,
                               maxLines: 1,
@@ -123,7 +146,7 @@ class _NewsCardState extends State<NewsCard> {
             ),
             Padding(
               padding: EdgeInsets.only(left: 8.0, bottom: 8.0),
-              child: Text(widget.post.publishedAt),
+              child: widget.post.publishedAt != null ? Text(widget.post.publishedAt) : Container(),
             ),
             widget.post.description != null
                 ? Padding(
@@ -148,15 +171,24 @@ class _NewsCardState extends State<NewsCard> {
                 Container(
                   child: widget.isHomePage
                       ? (isBookmarked
-                          ? Text(
-                              'SAVED',
-                              style: TextStyle(color: Colors.green),
+                          ? IconButton(
+                              icon: Icon(Icons.bookmark),
+                              onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text('Bookmark deleted'),
+                                  duration: Duration(seconds: 1),
+                                );
+                                Scaffold.of(context).showSnackBar(snackBar);
+                                addBookmark.removeData(
+                                    documentID: savedBookmarkDocId, bookmarkURL: widget.post.url);
+                                print("bookmarkDocumentID: $savedBookmarkDocId");
+                                setState(() {
+                                  isBookmarked = !isBookmarked;
+                                });
+                              },
                             )
-                          : FlatButton(
-                              child: Text(
-                                'SAVE',
-                                style: TextStyle(color: Colors.blueAccent),
-                              ),
+                          : IconButton(
+                              icon: Icon(Icons.bookmark_border),
                               onPressed: () {
                                 addBookmark.addData(widget.post);
                                 setState(() {
@@ -164,12 +196,15 @@ class _NewsCardState extends State<NewsCard> {
                                 });
 
                                 final snackBar = SnackBar(
-                                  content: Text('Bookmark has been saved.'),
+                                  content: Text('Bookmark saved'),
+                                  duration: Duration(seconds: 2),
                                   action: SnackBarAction(
                                     label: 'Undo',
                                     onPressed: () {
                                       String bookmarkDocumentID = addBookmark.newsDocumentID;
-                                      addBookmark.removeData(bookmarkDocumentID);
+                                      addBookmark.removeData(
+                                          documentID: bookmarkDocumentID,
+                                          bookmarkURL: widget.post.url);
                                       print("bookmarkDocumentID: $bookmarkDocumentID");
                                       setState(() {
                                         isBookmarked = !isBookmarked;
@@ -181,15 +216,26 @@ class _NewsCardState extends State<NewsCard> {
                               },
                             )) //To add bookmark
                       : (isBookmarked
-                          ? FlatButton(
-                              child: Text(
-                                'DELETE',
-                                style: TextStyle(
-                                  color: Colors.redAccent,
-                                ),
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.delete,
                               ),
                               onPressed: () {
-                                addBookmark.removeData(widget.post.documentID);
+                                Post post = widget.post;
+                                addBookmark.removeData(
+                                    documentID: widget.post.documentID,
+                                    bookmarkURL: widget.post.url);
+                                final snackBar = SnackBar(
+                                  content: Text('Bookmark removed'),
+                                  duration: Duration(seconds: 2),
+                                  action: SnackBarAction(
+                                    label: 'Undo',
+                                    onPressed: () {
+                                      addBookmark.addData(post);
+                                    },
+                                  ),
+                                );
+                                Scaffold.of(context).showSnackBar(snackBar);
                               },
                             )
                           : SizedBox()),
@@ -202,9 +248,3 @@ class _NewsCardState extends State<NewsCard> {
     );
   }
 }
-
-/*
-
-
-
- */

@@ -18,7 +18,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
   @override
   void initState() {
     super.initState();
-    currentUser = user.loggedInUser;
+    currentUser = user.loggedInUserID;
   }
 
   @override
@@ -45,11 +45,7 @@ class NewsCardStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore
-          .collection("users")
-          .document(currentUser)
-          .collection("saves")
-          .snapshots(),
+      stream: _firestore.collection("users").document(currentUser).collection("saves").snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(

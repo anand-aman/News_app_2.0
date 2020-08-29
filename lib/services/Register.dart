@@ -24,7 +24,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   initState() {
     firstNameInputController = new TextEditingController();
-    lastNameInputController = new TextEditingController();
     emailInputController = new TextEditingController();
     pwdInputController = new TextEditingController();
     confirmPwdInputController = new TextEditingController();
@@ -63,15 +62,14 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assests/images/backg.jpg"),
-                    fit: BoxFit.cover),
+                    image: AssetImage("assests/images/backg.jpg"), fit: BoxFit.cover),
               ),
               child: Column(
                 children: <Widget>[
                   Align(
                     alignment: Alignment.center,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Container(
                         height: deviceHeight * 0.15,
                         width: deviceHeight * 0.15,
@@ -100,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SizedBox(
-                    height: deviceHeight*0.05,
+                    height: deviceHeight * 0.09,
                   ),
                   Form(
                     key: _registerFormKey,
@@ -119,66 +117,26 @@ class _RegisterPageState extends State<RegisterPage> {
                             labelText: 'First Name*',
                             hintText: "John",
                             labelStyle: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w100,),
-                            hintStyle: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.w100),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w100,
+                            ),
+                            hintStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w100),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 1.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 2.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: deviceHeight*0.02,
-                        ),
-                        TextFormField(
-                            style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              labelText: 'Last Name*',
-                              hintText: "Doe",
-                              labelStyle: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.w100,),
-                              hintStyle: TextStyle(
-                                  color: Colors.white, fontWeight: FontWeight.w100),
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 20.0),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(32.0)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.lightBlueAccent, width: 1.0),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(32.0)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.lightBlueAccent, width: 2.0),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(32.0)),
-                              ),
-                            ),
-                            controller: lastNameInputController,
-                            validator: (value) {
-                              if (value.length < 3) {
-                                return "Please enter a valid last name. Character>3";
-                              }
-                            }),
-                        SizedBox(
-                          height: deviceHeight*0.02,
+                          height: deviceHeight * 0.02,
                         ),
                         TextFormField(
                           style: TextStyle(color: Colors.white),
@@ -186,23 +144,21 @@ class _RegisterPageState extends State<RegisterPage> {
                           decoration: InputDecoration(
                             labelText: 'Email ID*',
                             labelStyle: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w100,),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w100,
+                            ),
                             hintText: "john.doe@gmail.com",
-                            hintStyle: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.w100),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
+                            hintStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w100),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 1.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 2.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                           ),
@@ -211,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           validator: emailValidator,
                         ),
                         SizedBox(
-                          height: deviceHeight*0.02,
+                          height: deviceHeight * 0.02,
                         ),
                         TextFormField(
                           style: TextStyle(color: Colors.white),
@@ -219,23 +175,21 @@ class _RegisterPageState extends State<RegisterPage> {
                           decoration: InputDecoration(
                             labelText: 'Password*',
                             labelStyle: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w100,),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w100,
+                            ),
                             hintText: "********",
-                            hintStyle: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.w100),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
+                            hintStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w100),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 1.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 2.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                           ),
@@ -244,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           validator: pwdValidator,
                         ),
                         SizedBox(
-                          height: deviceHeight*0.02,
+                          height: deviceHeight * 0.02,
                         ),
                         TextFormField(
                           style: TextStyle(color: Colors.white),
@@ -252,23 +206,21 @@ class _RegisterPageState extends State<RegisterPage> {
                           decoration: InputDecoration(
                             labelText: 'Confirm Your Password*',
                             labelStyle: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w100,),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w100,
+                            ),
                             hintText: "********",
-                            hintStyle: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.w100),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
+                            hintStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w100),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 1.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.lightBlueAccent, width: 2.0),
+                              borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
                               borderRadius: BorderRadius.all(Radius.circular(32.0)),
                             ),
                           ),
@@ -279,7 +231,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     ),
                   ),
-
                   Padding(
                     padding: EdgeInsets.only(top: deviceHeight * 0.0189),
                     child: RaisedButton(
@@ -290,77 +241,68 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       onPressed: () {
-                        setState(() {
-                          showSpinner = true;
-                        });
-
                         if (_registerFormKey.currentState.validate()) {
-                          if (pwdInputController.text ==
-                              confirmPwdInputController.text) {
+                          if (pwdInputController.text == confirmPwdInputController.text) {
+                            setState(() {
+                              showSpinner = true;
+                            });
                             FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
-                                email: emailInputController.text,
-                                password: pwdInputController.text)
+                                    email: emailInputController.text,
+                                    password: pwdInputController.text)
                                 .then(
                                   (currentUser) => Firestore.instance
-                                  .collection("users")
-                                  .document(currentUser.uid)
-                                  .setData({
-                                "uid": currentUser.uid,
-                                "fname":
-                                firstNameInputController.text,
-                                "surname":
-                                lastNameInputController.text,
-                                "email": emailInputController.text,
-                              })
-                                  .then((result) => {
-                                {
-                                  setState(() {
-                                    showSpinner = false;
-                                  })
-                                },
-                                {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Check()),
-                                          (_) => false),
-                                  firstNameInputController
-                                      .clear(),
-                                  lastNameInputController.clear(),
-                                  emailInputController.clear(),
-                                  pwdInputController.clear(),
-                                  confirmPwdInputController
-                                      .clear(),
-                                }
-                              })
-                                  .catchError((err) {
-                                setState(() {
-                                  showSpinner = false;
-                                });
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text("Error"),
-                                      content: Text(err.toString()),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text("Close"),
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pop();
+                                      .collection("users")
+                                      .document(currentUser.uid)
+                                      .setData({
+                                        "uid": currentUser.uid,
+                                        "fname": firstNameInputController.text,
+                                        "email": emailInputController.text,
+                                        "loginMode": "email",
+                                      })
+                                      .then((result) => {
+                                            {
+                                              setState(() {
+                                                showSpinner = false;
+                                              })
+                                            },
+                                            {
+                                              Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => Check()),
+                                                  (_) => false),
+                                              firstNameInputController.clear(),
+                                              lastNameInputController.clear(),
+                                              emailInputController.clear(),
+                                              pwdInputController.clear(),
+                                              confirmPwdInputController.clear(),
+                                            }
+                                          })
+                                      .catchError((err) {
+                                        setState(() {
+                                          showSpinner = false;
+                                        });
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Error"),
+                                              content: Text(err.toString()),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  child: Text("Close"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                )
+                                              ],
+                                            );
                                           },
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
-                              }),
-                            )
+                                        );
+                                      }),
+                                )
                                 .catchError(
-                                  (err) {
+                              (err) {
                                 setState(() {
                                   showSpinner = false;
                                 });
@@ -384,9 +326,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               },
                             );
                           } else {
-                            setState(() {
-                              showSpinner = false;
-                            });
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -417,7 +356,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       SizedBox(
-                        width: deviceHeight*0.05,
+                        width: deviceHeight * 0.05,
                       ),
                       FlatButton(
                         child: Text(
@@ -431,8 +370,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
+                            MaterialPageRoute(builder: (context) => LoginPage()),
                           );
                         },
                       )
